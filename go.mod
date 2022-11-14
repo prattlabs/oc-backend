@@ -1,4 +1,4 @@
-module os-login.com/backend
+module oc-login.com/backend
 
 go 1.18
 
