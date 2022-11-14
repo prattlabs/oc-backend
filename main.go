@@ -8,7 +8,7 @@ import (
 func main() {
 	r := gin.Default()
 	r.Use(cors.Default())
-	gin.SetMode(gin.DebugMode)
+	// gin.SetMode(gin.DebugMode)
 	r.POST("/login", handleLogin)
 	r.Run() // listen and serve on
 }

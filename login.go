@@ -1,7 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
+	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -10,7 +13,7 @@ import (
 type Login struct {
 	Username string `form:"username" json:"username" xml:"username"  binding:"required"`
 	Password string `form:"password" json:"password" xml:"password" binding:"required"`
-	Token    string `form:"token" json:"token" xml:"token" binding:"required"`
+	Token    int    `form:"token" json:"token" xml:"token" binding:"required"`
 }
 
 // handleLogin handles the login request.
@@ -25,11 +28,14 @@ func handleLogin(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, gin.H{"status": "unauthorized"})
 		return
 	}
+
 	c.JSON(http.StatusOK, gin.H{"status": "you are logged in"})
 }
 
 // tokenValid checks if the token is valid.
-func tokenValid(c *gin.Context, s string) bool {
-	// todo implement token validation
-	return true
+func tokenValid(c *gin.Context, t int) bool {
+	now := time.Now()
+	hourMinute := fmt.Sprintf("%d%d", now.Hour(), now.Minute())
+	hourMinuteInt, _ := strconv.Atoi(hourMinute) // todo handle error
+	return t == hourMinuteInt
 }
